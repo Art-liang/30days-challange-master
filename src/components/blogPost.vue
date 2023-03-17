@@ -1,16 +1,9 @@
 <template>
   <div>
-    <b-container>
-      <b-col class="m-5 text-center">
-        <h2>These are my blogs</h2>
-      </b-col>
-      <b-row align-h="center" class="m-5">
-        <b-form-input
-          v-model="search"
-          placeholder="Search Blogs"
-        ></b-form-input>
-      </b-row>
-      <b-row align-h="center" class="m-3">
+    <input type="text" v-model="search" placeholder="search blogs" />
+    <b-conainter>
+      <b-row style="padding-top: 35px">
+       
         <b-card
           v-for="blog in filteredBlogs"
           :key="blog.id"
@@ -19,33 +12,23 @@
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 20rem;"
-          class="m-3"
+          style="max-width: 30rem;"
+          class="mb-2"
         >
           <b-card-text>
-            Content: {{ blog.content }}
-          </b-card-text>
-           <b-card-text>
-            Author: {{blog.author}}
-          </b-card-text>
-           <b-card-text>
-             HashTags:
-            <ul>
-              <li v-for="hashtag in blog.hashTags" :key="hashtag.id"> # {{ hashtag }}</li>
-            </ul>
+            {{ blog.body }}
           </b-card-text>
 
           <b-button href="#" variant="primary">See More</b-button>
         </b-card>
+ 
       </b-row>
-    </b-container>
+    </b-conainter>
   </div>
 </template>
 
 <script>
 import searchMixin from "../mixins/searchMixin";
-import { db } from "@/config/firebaseConfig.js";
-
 export default {
   data() {
     return {
@@ -53,28 +36,53 @@ export default {
       search: "",
     };
   },
-  mounted() {
-    this.getBlogs();
+  created() {
+    this.blogs = [
+      {
+        userId: 1,
+        id: 1,
+        title: "1515151515enderit",
+        body:
+          "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+      },
+      {
+        userId: 1,
+        id: 2,
+        title: "qui est esse",
+        body:
+          "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+      },
+
+      {
+    "userId": 1,
+    "id": 3,
+    "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+    "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
   },
-  methods: {
-    async getBlogs() {
-      let dbBlogs = await db.collection("blogs").get();
-      const blogs = [];
-      dbBlogs.forEach((doc) => {
-        let appData = doc.data();
-        appData.id = doc.id;
-        blogs.push({
-          id: appData.id,
-          title: appData.title,
-          content: appData.content,
-          author: appData.author,
-          hashTags: appData.hashTags,
-        });
-      });
-      this.blogs = blogs;
-      // console.log(this.blogs);
-    },
+  {
+    "userId": 1,
+    "id": 4,
+    "title": "eum et est occaecati",
+    "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
+  },
+  {
+    "userId": 1,
+    "id": 5,
+    "title": "nesciunt quas odio",
+    "body": "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque"
+  },
+  {
+    "userId": 1,
+    "id": 6,
+    "title": "dolorem eum magni eos aperiam quia",
+    "body": "ut aspernatur corporis harum nihil quis provident sequi\nmollitia nobis aliquid molestiae\nperspiciatis et ea nemo ab reprehenderit accusantium quas\nvoluptate dolores velit et doloremque molestiae"
+  },
+      
+    ];
+    // });
   },
   mixins: [searchMixin],
 };
 </script>
+
+<style scoped></style>
